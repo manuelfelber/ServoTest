@@ -35,6 +35,7 @@ void turn(float , int , int );
 void shakeLeg (int ,int ,int );
 void updown(float , int , int );
 void swing(float , int , int );
+void tiptoeSwing(float , int , int );
 void moveServos(int , int [] );
 void execute(int[4] , int[4] , int , double[4] , float );
 void oscillateServos(int[4] , int[4] , int , double [4], float );

@@ -250,6 +250,28 @@ void swing(float steps, int T, int h){
   execute(A, O, T, phase_diff, steps);
 }
 
+//---------------------------------------------------------
+//-- Zowi movement: swinging side to side without touching the floor with the heel
+//--  Parameters:
+//--     steps: Number of steps
+//--     T : Period
+//--     h : Amount of swing (from 0 to 50 aprox)
+//---------------------------------------------------------
+void tiptoeSwing(float steps, int T, int h){
+
+  //-- Both feets are in phase. The offset is not half the amplitude in order to tiptoe
+  //-- It causes the robot to swing from side to side
+  int A[4]= {0, 0, h, h};
+  int O[4] = {0, 0, h, -h};
+  double phase_diff[4] = {0, 0, 0, 0};
+
+  //-- Let's oscillate the servos!
+  execute(A, O, T, phase_diff, steps);
+}
+
+///////////////////////////////////////////////////////////////////
+//-- BASIC MOTION FUNCTIONS -------------------------------------//
+///////////////////////////////////////////////////////////////////
 void execute(int A[4], int O[4], int T, double phase_diff[4], float steps){
 
 	for(int i = 0; i < 4; i++){
@@ -268,9 +290,6 @@ void execute(int A[4], int O[4], int T, double phase_diff[4], float steps){
 }
 
 
-///////////////////////////////////////////////////////////////////
-//-- BASIC MOTION FUNCTIONS -------------------------------------//
-///////////////////////////////////////////////////////////////////
 void moveServos(int time, int  servo_target[]) {
   int servo_position[4];
   float increment[4];
