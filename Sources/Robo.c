@@ -209,6 +209,28 @@ void shakeLeg (int steps,int T,int dir){
   WAIT1_Waitms(T);
 }
 
+//---------------------------------------------------------
+//-- Zowi movement: up & down
+//--  Parameters:
+//--    * steps: Number of jumps
+//--    * T: Period
+//--    * h: Jump height: SMALL / MEDIUM / BIG
+//--              (or a number in degrees 0 - 90)
+//---------------------------------------------------------
+void updown(float steps, int T, int h){
+
+  //-- Both feet are 180 degrees out of phase
+  //-- Feet amplitude and offset are the same
+  //-- Initial phase for the right foot is -90, so that it starts
+  //--   in one extreme position (not in the middle)
+  int A[4]= {0, 0, h, h};
+  int O[4] = {0, 0, h, -h};
+  double phase_diff[4] = {0, 0, DEG2RAD(-90), DEG2RAD(90)};
+
+  //-- Let's oscillate the servos!
+  execute(A, O, T, phase_diff, steps);
+}
+
 void execute(int A[4], int O[4], int T, double phase_diff[4], float steps){
 
 	for(int i = 0; i < 4; i++){

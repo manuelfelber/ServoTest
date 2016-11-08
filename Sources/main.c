@@ -90,7 +90,8 @@ int main(void)
 	  //turn(4,1200,1);
 	  //walk(2,1200,1);
 	  //turn(4,1200,1);
-	  shakeLeg(2,1200,1);
+	  //shakeLeg(2,1200,1);
+	  updown(1,1200,BIG);
 	  //WAIT1_Waitms(3000);
   }
 
