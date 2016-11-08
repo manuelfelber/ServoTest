@@ -231,6 +231,25 @@ void updown(float steps, int T, int h){
   execute(A, O, T, phase_diff, steps);
 }
 
+//---------------------------------------------------------
+//-- Zowi movement: swinging side to side
+//--  Parameters:
+//--     steps: Number of steps
+//--     T : Period
+//--     h : Amount of swing (from 0 to 50 aprox)
+//---------------------------------------------------------
+void swing(float steps, int T, int h){
+
+  //-- Both feets are in phase. The offset is half the amplitude
+  //-- It causes the robot to swing from side to side
+  int A[4]= {0, 0, h, h};
+  int O[4] = {0, 0, h/2, -h/2};
+  double phase_diff[4] = {0, 0, DEG2RAD(0), DEG2RAD(0)};
+
+  //-- Let's oscillate the servos!
+  execute(A, O, T, phase_diff, steps);
+}
+
 void execute(int A[4], int O[4], int T, double phase_diff[4], float steps){
 
 	for(int i = 0; i < 4; i++){
