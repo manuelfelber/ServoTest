@@ -163,9 +163,9 @@ void shakeLeg (int steps,int T,int dir){
   int numberLegMoves=2;
 
   //Parameters of all the movements. Default: Right leg
-  int shake_leg1[4]={90, 90, 58, 35};
-  int shake_leg2[4]={90, 90, 58, 120};
-  int shake_leg3[4]={90, 90, 58, 60};
+  int shake_leg1[4]={90, 90, 5, 35};//40,90,58,35
+  int shake_leg2[4]={90, 90, 5, 120};//90,90,58,120
+  int shake_leg3[4]={90, 90, 5, 60};//90,90,58,60
   int homes[4]={90, 90, 90, 90};
 
   //Changes in the parameters if left leg is chosen
