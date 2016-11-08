@@ -269,6 +269,125 @@ void tiptoeSwing(float steps, int T, int h){
   execute(A, O, T, phase_diff, steps);
 }
 
+//---------------------------------------------------------
+//-- Zowi gait: Jitter
+//--  Parameters:
+//--    steps: Number of jitters
+//--    T: Period of one jitter
+//--    h: height (Values between 5 - 25)
+//---------------------------------------------------------
+void jitter(float steps, int T, int h){
+
+  //-- Both feet are 180 degrees out of phase
+  //-- Feet amplitude and offset are the same
+  //-- Initial phase for the right foot is -90, so that it starts
+  //--   in one extreme position (not in the middle)
+  //-- h is constrained to avoid hit the feets
+  //h=min(25,h);
+	 if(25 < h) h = 25;
+
+  int A[4]= {h, h, 0, 0};
+  int O[4] = {0, 0, 0, 0};
+  double phase_diff[4] = {DEG2RAD(-90), DEG2RAD(90), 0, 0};
+
+  //-- Let's oscillate the servos!
+  execute(A, O, T, phase_diff, steps);
+}
+
+
+//---------------------------------------------------------
+//-- Zowi gait: Ascending & turn (Jitter while up&down)
+//--  Parameters:
+//--    steps: Number of bends
+//--    T: Period of one bend
+//--    h: height (Values between 5 - 15)
+//---------------------------------------------------------
+void ascendingTurn(float steps, int T, int h){
+
+  //-- Both feet and legs are 180 degrees out of phase
+  //-- Initial phase for the right foot is -90, so that it starts
+  //--   in one extreme position (not in the middle)
+  //-- h is constrained to avoid hit the feets
+  //h=min(13,h);
+  if(13 < h) h = 13;
+
+  int A[4]= {h, h, h, h};
+  int O[4] = {0, 0, h+4, -h+4};
+  double phase_diff[4] = {DEG2RAD(-90), DEG2RAD(90), DEG2RAD(-90), DEG2RAD(90)};
+
+  //-- Let's oscillate the servos!
+  execute(A, O, T, phase_diff, steps);
+}
+
+
+//---------------------------------------------------------
+//-- Zowi gait: Moonwalker. Zowi moves like Michael Jackson
+//--  Parameters:
+//--    Steps: Number of steps
+//--    T: Period
+//--    h: Height. Typical valures between 15 and 40
+//--    dir: Direction: LEFT / RIGHT
+//---------------------------------------------------------
+void moonwalker(float steps, int T, int h, int dir){
+
+  //-- This motion is similar to that of the caterpillar robots: A travelling
+  //-- wave moving from one side to another
+  //-- The two Zowi's feet are equivalent to a minimal configuration. It is known
+  //-- that 2 servos can move like a worm if they are 120 degrees out of phase
+  //-- In the example of Zowi, the two feet are mirrored so that we have:
+  //--    180 - 120 = 60 degrees. The actual phase difference given to the oscillators
+  //--  is 60 degrees.
+  //--  Both amplitudes are equal. The offset is half the amplitud plus a little bit of
+  //-   offset so that the robot tiptoe lightly
+
+  int A[4]= {0, 0, h, h};
+  int O[4] = {0, 0, h/2+2, -h/2 -2};
+  int phi = -dir * 90;
+  double phase_diff[4] = {0, 0, DEG2RAD(phi), DEG2RAD(-60 * dir + phi)};
+
+  //-- Let's oscillate the servos!
+  execute(A, O, T, phase_diff, steps);
+}
+
+
+//----------------------------------------------------------
+//-- Zowi gait: Crusaito. A mixture between moonwalker and walk
+//--   Parameters:
+//--     steps: Number of steps
+//--     T: Period
+//--     h: height (Values between 20 - 50)
+//--     dir:  Direction: LEFT / RIGHT
+//-----------------------------------------------------------
+void crusaito(float steps, int T, int h, int dir){
+
+  int A[4]= {25, 25, h, h};
+  int O[4] = {0, 0, h/2+ 4, -h/2 - 4};
+  double phase_diff[4] = {90, 90, DEG2RAD(0), DEG2RAD(-60 * dir)};
+
+  //-- Let's oscillate the servos!
+  execute(A, O, T, phase_diff, steps);
+}
+
+
+//---------------------------------------------------------
+//-- Zowi gait: Flapping
+//--  Parameters:
+//--    steps: Number of steps
+//--    T: Period
+//--    h: height (Values between 10 - 30)
+//--    dir: direction: FOREWARD, BACKWARD
+//---------------------------------------------------------
+void flapping(float steps, int T, int h, int dir){
+
+  int A[4]= {12, 12, h, h};
+  int O[4] = {0, 0, h - 10, -h + 10};
+  double phase_diff[4] = {DEG2RAD(0), DEG2RAD(180), DEG2RAD(-90 * dir), DEG2RAD(90 * dir)};
+
+  //-- Let's oscillate the servos!
+  execute(A, O, T, phase_diff, steps);
+}
+
+
 ///////////////////////////////////////////////////////////////////
 //-- BASIC MOTION FUNCTIONS -------------------------------------//
 ///////////////////////////////////////////////////////////////////

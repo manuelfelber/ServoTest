@@ -93,7 +93,11 @@ int main(void)
 	  //shakeLeg(2,1200,1);
 	  //updown(1,1200,BIG);
 	  //swing(1,1200,BIG);
-	  tiptoeSwing(1,1200,BIG);
+	  //tiptoeSwing(1,1200,BIG);
+	  //ascendingTurn(1,1200,BIG);
+	  //moonwalker(1,1200,BIG,1);
+	  //crusaito(1,1200,BIG,1);
+	  flapping(1,1200,BIG,1);
 	  //WAIT1_Waitms(3000);
   }
 
