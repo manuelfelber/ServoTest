@@ -86,9 +86,11 @@ int main(void)
 	  //Robo_StepTime(1);
 	  //WAIT1_Waitms(500);
 	  //Robo_initPos();
-	  walk(2,1200,1);
-	  turn(3,1200,1);
-	  walk(2,1200,1);
+	  //walk(2,1200,1);
+	  //turn(4,1200,1);
+	  //walk(2,1200,1);
+	  //turn(4,1200,1);
+	  shakeLeg(2,1200,1);
 	  //WAIT1_Waitms(3000);
   }
 

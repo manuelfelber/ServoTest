@@ -41,6 +41,8 @@ struct Servos{
 	bool _rev;
 }servo;
 
+extern struct Servos _servo[4];
+
 void SetA( int , int );
 void SetO( int , int );
 void SetPh(double , int );

@@ -192,19 +192,19 @@ void shakeLeg (int steps,int T,int dir){
   }
 
   for (int j=0; j<steps;j++)
-  {/*
+  {
   //Bend movement
-  _moveServos(T2/2,shake_leg1); //todo copy moveServos
-  _moveServos(T2/2,shake_leg2);
+  moveServos(T2/2,shake_leg1);
+  moveServos(T2/2,shake_leg2);
 
     //Shake movement
     for (int i=0;i<numberLegMoves;i++)
     {
-    _moveServos(T/(2*numberLegMoves),shake_leg3);
-    _moveServos(T/(2*numberLegMoves),shake_leg2);
+    moveServos(T/(2*numberLegMoves),shake_leg3);
+    moveServos(T/(2*numberLegMoves),shake_leg2);
     }
-    _moveServos(500,homes); //Return to home position
-  */}
+    moveServos(500,homes); //Return to home position
+  }
 
   WAIT1_Waitms(T);
 }
@@ -226,6 +226,62 @@ void execute(int A[4], int O[4], int T, double phase_diff[4], float steps){
 	oscillateServos(A,O, T, phase_diff,(float)steps-cycles);
 }
 
+
+///////////////////////////////////////////////////////////////////
+//-- BASIC MOTION FUNCTIONS -------------------------------------//
+///////////////////////////////////////////////////////////////////
+void moveServos(int time, int  servo_target[]) {
+  int servo_position[4];
+  float increment[4];
+  unsigned long final_time = 0;
+  unsigned long partial_time = 0;
+
+  for (int i = 0; i < 4; i++) servo_position[i] = 90;
+
+  if(time>10){
+    for (int i = 0; i < 4; i++) increment[i] = ((servo_target[i]) - servo_position[i]) / (time / 10.0);
+    final_time =  cntr + time;
+
+    for (int iteration = 1; cntr < final_time; iteration++) {
+      partial_time = cntr + 10;
+      float position = 0.0;
+      for (int i = 0; i < 4; i++){
+		position = (float)(servo_position[i] + (iteration * increment[i]))*1.4166666;
+		switch(i){
+			case 0: SERVO1_SetPos((byte)position);
+			break;
+		case 1: SERVO2_SetPos((byte)position);
+			break;
+			case 2: SERVO3_SetPos((byte)position);
+		break;
+			case 3: SERVO4_SetPos((byte)position);
+			break;
+		}
+      }
+      while (cntr < partial_time); //pause
+    }
+  }
+  else{
+    float position = 0.0;
+    for (int i = 0; i < 4; i++){
+		position = (float)(servo_target[i])*1.4166666;
+		switch(i){
+			case 0: SERVO1_SetPos((byte)position);
+			break;
+		case 1: SERVO2_SetPos((byte)position);
+			break;
+			case 2: SERVO3_SetPos((byte)position);
+		break;
+			case 3: SERVO4_SetPos((byte)position);
+			break;
+		}
+    }
+  }
+  for (int i = 0; i < 4; i++) servo_position[i] = servo_target[i];
+}
+
+
+
 void oscillateServos(int A[4], int O[4], int T, double phase_diff[4], float cycle){
 	for (int i=0; i<4; i++) {
 		SetO(O[i], i);
@@ -237,7 +293,7 @@ void oscillateServos(int A[4], int O[4], int T, double phase_diff[4], float cycl
 	double ref=cntr;
 	for (double x=ref; x<=T*cycle+ref; x=cntr){
 		for (int i=0; i<4; i++){
-		refresh(i); //todo von next_sample kommt nie true!
+		refresh(i);
 		}
 	}
 }
